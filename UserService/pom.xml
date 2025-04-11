@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.example</groupId>
+        <artifactId>my-project</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+    <!-- artifactId should ideally match the module name/folder -->
+    <artifactId>userService</artifactId>
+    <name>User Service</name>
+    <description>Micro-service for users</description>
+
+    <packaging>jar</packaging>
+
+    <!-- Properties like java.version and spring-boot.version are inherited from parent -->
+    <!-- Properties specific to this module or overriding parent -->
+    <properties>
+        <!-- You might not need java/springboot versions here if inherited -->
+        <!-- <java.version>21</java.version> -->
+        <!-- <spring-boot.version>3.2.4</spring-boot.version> -->
+        <!-- Keep specific versions like spring-cloud or jjwt if needed -->
+        <spring-cloud.version>2023.0.1</spring-cloud.version> <!-- Example, ensure it matches parent or remove if identical -->
+        <jjwt.version>0.11.5</jjwt.version>
+        <redis.version>3.2.4</redis.version> <!-- Manage Redis version -->
+    </properties>
+
+    <!-- dependencyManagement for spring-cloud is now inherited from parent -->
+    <!-- You might remove the dependencyManagement block here if only inheriting -->
+
+    <dependencies>
+        <!-- Spring Cloud Netflix Eureka Client (version managed by parent BOM) -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+        </dependency>
+
+        <!-- Spring Boot Starters (versions managed by parent BOM) -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+<!--            <exclusions>-->
+<!--                <exclusion>-->
+<!--                    <groupId>org.springframework.boot</groupId>-->
+<!--                    <artifactId>spring-boot-starter-logging</artifactId> &lt;!&ndash; If excluded, need another logging impl &ndash;&gt;-->
+<!--                </exclusion>-->
+<!--            </exclusions>-->
+        </dependency>
+        <!-- Include Logback explicitly -->
+<!--        <dependency>-->
+<!--            <groupId>org.springframework.boot</groupId>-->
+<!--            <artifactId>spring-boot-starter-log4j2</artifactId> &lt;!&ndash; Use log4j2 for async logging &ndash;&gt;-->
+<!--        </dependency>-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.mysql</groupId>
+            <artifactId>mysql-connector-j</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
+            <!-- Version managed in properties -->
+            <!-- <version>${redis.version}</version> --> <!-- Removed explicit version -->
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId> <!-- Recommended for health checks, etc. -->
+        </dependency>
+
+        <!-- Lombok (version managed by parent, scope often 'provided') -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <scope>provided</scope> <!-- Changed scope -->
+        </dependency>
+
+        <!-- Redis json converter -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.datatype</groupId>
+            <artifactId>jackson-datatype-jsr310</artifactId>
+        </dependency>
+
+        <!-- JWT Dependencies (if used, keep specific versions) -->
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt-api</artifactId>
+            <version>${jjwt.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt-impl</artifactId>
+            <version>${jjwt.version}</version>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt-jackson</artifactId>
+            <version>${jjwt.version}</version>
+            <scope>runtime</scope>
+        </dependency>
+
+        <!-- Kafka Client for Logback -->
+        <dependency>
+            <groupId>org.apache.kafka</groupId>
+            <artifactId>kafka-clients</artifactId>
+            <version>3.7.1</version>
+            <!-- Version usually managed by Spring Boot / Cloud Stream Kafka -->
+        </dependency>
+
+        <!-- Logstash Logback Encoder (version managed by parent) -->
+        <dependency>
+            <groupId>net.logstash.logback</groupId>
+            <artifactId>logstash-logback-encoder</artifactId>
+        </dependency>
+
+        <!-- Micrometer Tracing (Highly Recommended for correlating logs) -->
+        <dependency>
+            <groupId>io.micrometer</groupId>
+            <artifactId>micrometer-tracing-bridge-brave</artifactId> <!-- Or zipkin -->
+        </dependency>
+        <dependency> <!-- If sending traces via HTTP -->
+            <groupId>io.zipkin.reporter2</groupId>
+            <artifactId>zipkin-reporter-brave</artifactId>
+        </dependency>
+        <!-- Or if sending traces via Kafka -->
+        <!--
+        <dependency>
+            <groupId>org.springframework.kafka</groupId>
+            <artifactId>spring-kafka</artifactId>
+        </dependency>
+        -->
+
+    </dependencies>
+
+    <build>
+        <!-- build section inherited from parent usually, unless specific config needed -->
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <!-- Configuration inherited or can be added here -->
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <!-- Configuration inherited or can be specified if different -->
+            </plugin>
+        </plugins>
+    </build>
+
+</project>

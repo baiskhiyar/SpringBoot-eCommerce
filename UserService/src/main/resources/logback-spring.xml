@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+    <!-- Include Spring Boot's base configuration for standard properties -->
+    <include resource="org/springframework/boot/logging/logback/base.xml"/>
+
+    <!-- ================== Variables ================== -->
+    <!-- Read properties from Spring Environment (application.properties, etc.) -->
+    <springProperty scope="context" name="APP_NAME" source="spring.application.name" defaultValue="unknown-service"/>
+    <springProperty scope="context" name="KAFKA_BOOTSTRAP_SERVERS" source="logging.kafka.bootstrap-servers" defaultValue="localhost:9092"/>
+    <springProperty scope="context" name="KAFKA_TOPIC" source="logging.kafka.topic" defaultValue="app-logs"/>
+
+    <!-- Standard Logback properties -->
+    <property name="LOG_PATTERN_CONSOLE" value="%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n%throwable"/>
+
+    <!-- Optional properties for file logging (read from Spring or use defaults) -->
+    <!-- Ensure these are defined in application.properties if you intend to use a file appender -->
+    <springProperty scope="context" name="LOG_DIR" source="logging.file.path" defaultValue="./logs"/>
+    <!-- Define a temporary variable from Spring, then use it in a standard property -->
+    <springProperty scope="context" name="LOG_FILE_NAME_FROM_SPRING" source="logging.file.name" defaultValue="${APP_NAME:-unknown-service}.log"/>
+    <property name="LOG_FILE" value="${LOG_DIR}/${LOG_FILE_NAME_FROM_SPRING}"/>
+    <!-- Note: LOG_DIR and LOG_FILE are not used by default in this config unless you add a FileAppender -->
+
+
+    <!-- ================== Console Appender ================== -->
+    <!-- Logs messages to the standard console output -->
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>${LOG_PATTERN_CONSOLE}</pattern>
+            <charset>utf8</charset>
+        </encoder>
+    </appender>
+
+    <!-- ================== Kafka Appender ================== -->
+    <!-- Sends logs in Logstash JSON format to a Kafka topic -->
+    <appender name="KAFKA_LOGSTASH" class="net.logstash.logback.appender.LogstashKafkaAppender">
+        <!-- Encoder: Formats logs as JSON -->
+        <encoder class="net.logstash.logback.encoder.LogstashEncoder">
+            <providers>
+                <timestamp>
+                    <timeZone>UTC</timeZone> <!-- Use UTC for consistency -->
+                </timestamp>
+                <version/> <!-- Adds Logstash schema version field -->
+                <logLevel/>
+                <loggerName/>
+                <threadName/>
+                <message/>
+                <stackTrace/>
+                <context/> <!-- Includes MDC properties -->
+                <tags/>    <!-- Includes Logback markers as tags -->
+                <arguments/> <!-- Includes log method arguments -->
+
+                <!-- Add Application Name explicitly from Spring property -->
+                <pattern>
+                    <pattern>
+                        {
+                        "app_name": "${APP_NAME}"
+                        }
+                    </pattern>
+                </pattern>
+
+                <!-- Include Trace/Span IDs from Micrometer Tracing (if present in MDC) -->
+                <mdc>
+                    <includeMdcKeyName>traceId</includeMdcKeyName>
+                    <includeMdcKeyName>spanId</includeMdcKeyName>
+                    <!-- Add any other custom MDC fields you want to include -->
+                </mdc>
+            </providers>
+
+            <!-- Optional: Use field names compatible with Elastic Common Schema (ECS) -->
+            <fieldNames>
+                <timestamp>@timestamp</timestamp>
+                <version>[@metadata][version]</version>
+                <level>log.level</level>
+                <thread>process.thread.name</thread>
+                <logger>log.logger</logger>
+                <message>message</message>
+                <stackTrace>error.stack_trace</stackTrace>
+                <!-- Add other ECS fields if needed -->
+            </fieldNames>
+        </encoder>
+
+        <!-- Kafka Topic to send logs to -->
+        <topic>${KAFKA_TOPIC}</topic>
+
+        <!-- Kafka Producer Configuration -->
+        <kafkaProducerConfig class="java.util.HashMap">
+            <put>bootstrap.servers</put>
+            <put>${KAFKA_BOOTSTRAP_SERVERS}</put>
+
+            <!-- Common Kafka producer settings (adjust as needed) -->
+            <put>acks</put>
+            <put>1</put> <!-- Set to 'all' for highest durability guarantee -->
+            <put>retries</put>
+            <put>3</put>
+            <put>linger.ms</put>
+            <put>5</put> <!-- Batch messages slightly for better throughput -->
+            <put>max.block.ms</put>
+            <put>5000</put> <!-- Max time to block waiting for metadata/buffer space -->
+
+            <!-- Add security configurations if your Kafka requires authentication -->
+            <!-- Example for SASL/PLAIN:
+            <put>security.protocol</put><put>SASL_PLAINTEXT</put>  or SASL_SSL
+            <put>sasl.mechanism</put><put>PLAIN</put>
+            <put>sasl.jaas.config</put><put>org.apache.kafka.common.security.plain.PlainLoginModule required username="your_user" password="your_password";</put>
+            -->
+            <!-- Example for SSL:
+            <put>security.protocol</put><put>SSL</put>
+            <put>ssl.truststore.location</put><put>/path/to/client.truststore.jks</put>
+            <put>ssl.truststore.password</put><put>truststore_password</put>
+            <put>ssl.keystore.location</put><put>/path/to/client.keystore.jks</put>
+            <put>ssl.keystore.password</put><put>keystore_password</put>
+            <put>ssl.key.password</put><put>key_password</put>
+            -->
+        </kafkaProducerConfig>
+    </appender>
+
+    <!-- ================== Async Appender (Optional) ================== -->
+    <!-- Wraps the Kafka appender to send logs asynchronously, improving application performance -->
+    <!-- Uncomment this block and change appender-refs below to use it -->
+    <!--
+    <appender name="ASYNC_KAFKA_LOGSTASH" class="ch.qos.logback.classic.AsyncAppender">
+        <appender-ref ref="KAFKA_LOGSTASH" />
+        <queueSize>512</queueSize>
+        <discardingThreshold>0</discardingThreshold>
+        <neverBlock>true</neverBlock>
+    </appender>
+    -->
+
+    <!-- ================== Root Logger Configuration ================== -->
+    <root level="INFO"> <!-- Default log level for the entire application -->
+        <!-- Use Spring profiles to control which appenders are active -->
+        <springProfile name="dev | default">
+            <appender-ref ref="CONSOLE"/>
+            <appender-ref ref="KAFKA_LOGSTASH"/>
+            <!-- <appender-ref ref="ASYNC_KAFKA_LOGSTASH"/> --> <!-- Use if AsyncAppender is enabled -->
+        </springProfile>
+        <springProfile name="prod | staging | uat">
+            <!-- Avoid console logging in production environments -->
+            <appender-ref ref="KAFKA_LOGSTASH"/>
+            <!-- <appender-ref ref="ASYNC_KAFKA_LOGSTASH"/> --> <!-- Use if AsyncAppender is enabled -->
+            <!-- Consider adding a fallback FileAppender here for production resilience -->
+        </springProfile>
+    </root>
+
+    <!-- ================== Specific Logger Configurations ================== -->
+    <!-- Set log levels for specific packages -->
+
+    <!-- Example: Set your application's base package to DEBUG level -->
+    <logger name="com.example.userservice" level="DEBUG" additivity="false">
+        <!-- Ensure appenders are explicitly defined here if additivity is false -->
+        <springProfile name="dev | default">
+            <appender-ref ref="CONSOLE"/>
+            <appender-ref ref="KAFKA_LOGSTASH"/>
+            <!-- <appender-ref ref="ASYNC_KAFKA_LOGSTASH"/> -->
+        </springProfile>
+        <springProfile name="prod | staging | uat">
+            <appender-ref ref="KAFKA_LOGSTASH"/>
+            <!-- <appender-ref ref="ASYNC_KAFKA_LOGSTASH"/> -->
+        </springProfile>
+    </logger>
+
+    <!-- Reduce verbosity of common frameworks -->
+    <logger name="org.springframework" level="INFO"/>
+    <logger name="org.hibernate.SQL" level="WARN"/> <!-- Show SQL Logs: DEBUG, Hide: WARN -->
+    <logger name="org.hibernate.type.descriptor.sql" level="WARN"/> <!-- Show SQL Parameters: TRACE, Hide: WARN -->
+    <logger name="org.apache.kafka" level="WARN"/> <!-- Kafka client internal logging -->
+    <logger name="org.apache.http" level="WARN"/>
+    <logger name="com.netflix.discovery" level="WARN"/>
+
+</configuration>

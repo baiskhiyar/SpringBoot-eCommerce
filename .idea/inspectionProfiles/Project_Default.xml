@@ -1,0 +1,57 @@
+<component name="InspectionProjectProfileManager">
+  <profile version="1.0">
+    <option name="myName" value="Project Default" />
+    <inspection_tool class="IncorrectHttpHeaderInspection" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="customHeaders">
+        <set>
+          <option value="X-USER-ID" />
+          <option value="X-USER-DATA" />
+          <option value="X-USER-USERNAME" />
+          <option value="X-USER-SCOPES" />
+        </set>
+      </option>
+    </inspection_tool>
+    <inspection_tool class="VulnerableLibrariesLocal" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="isIgnoringEnabled" value="true" />
+      <option name="ignoredModules">
+        <list>
+          <option value="userService" />
+          <option value="userService" />
+          <option value="userService" />
+          <option value="ApiGateWayService" />
+          <option value="ApiGateWayService" />
+          <option value="ApiGateWayService" />
+          <option value="AuthService" />
+          <option value="AuthService" />
+          <option value="AuthService" />
+        </list>
+      </option>
+      <option name="ignoredPackages">
+        <list>
+          <option value="org.apache.tomcat.embed:tomcat-embed-core:10.1.19" />
+          <option value="org.springframework:spring-context:6.1.5" />
+          <option value="org.springframework:spring-web:6.1.5" />
+          <option value="org.xmlunit:xmlunit-core:2.9.1" />
+          <option value="org.springframework:spring-context:6.1.5" />
+          <option value="io.netty:netty-common:4.1.107.Final" />
+          <option value="org.springframework:spring-context:6.1.5" />
+          <option value="io.netty:netty-common:4.1.107.Final" />
+          <option value="org.xmlunit:xmlunit-core:2.9.1" />
+        </list>
+      </option>
+      <option name="ignoredReasons">
+        <list>
+          <option value="Not exploitable" />
+          <option value="Other" />
+          <option value="Other" />
+          <option value="Not exploitable" />
+          <option value="Not exploitable" />
+          <option value="Not exploitable" />
+          <option value="Not exploitable" />
+          <option value="Not exploitable" />
+          <option value="Not exploitable" />
+        </list>
+      </option>
+    </inspection_tool>
+  </profile>
+</component>

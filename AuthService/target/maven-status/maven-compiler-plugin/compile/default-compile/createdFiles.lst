@@ -1,0 +1,3 @@
+AuthService/configs/RestTemplateConfig.class
+AuthService/models/UsersDTO.class
+AuthService/controllers/AuthController.class

@@ -1,0 +1,4 @@
+ProductService/ProductServiceApplication.class
+ProductService/configs/RedisConfig.class
+ProductService/controllers/ProductController.class
+ProductService/configs/RedisService.class
