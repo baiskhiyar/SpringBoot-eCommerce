@@ -1,0 +1,16 @@
+{
+  "properties": [
+    {
+      "name": "logging.kafka.bootstrap-servers",
+      "type": "java.lang.String",
+      "description": "Kafka bootstrap servers for the Logback Kafka appender (read via logback-spring.xml <springProperty>).",
+      "defaultValue": "localhost:9092"
+    },
+    {
+      "name": "logging.kafka.topic",
+      "type": "java.lang.String",
+      "description": "Kafka topic for the Logback Kafka appender (read via logback-spring.xml <springProperty>).",
+      "defaultValue": "app-logs"
+    }
+  ]
+}

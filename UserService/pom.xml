@@ -41,18 +41,7 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
-<!--            <exclusions>-->
-<!--                <exclusion>-->
-<!--                    <groupId>org.springframework.boot</groupId>-->
-<!--                    <artifactId>spring-boot-starter-logging</artifactId> &lt;!&ndash; If excluded, need another logging impl &ndash;&gt;-->
-<!--                </exclusion>-->
-<!--            </exclusions>-->
         </dependency>
-        <!-- Include Logback explicitly -->
-<!--        <dependency>-->
-<!--            <groupId>org.springframework.boot</groupId>-->
-<!--            <artifactId>spring-boot-starter-log4j2</artifactId> &lt;!&ndash; Use log4j2 for async logging &ndash;&gt;-->
-<!--        </dependency>-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
@@ -69,8 +58,6 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-redis</artifactId>
-            <!-- Version managed in properties -->
-            <!-- <version>${redis.version}</version> --> <!-- Removed explicit version -->
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -113,38 +100,6 @@
             <version>${jjwt.version}</version>
             <scope>runtime</scope>
         </dependency>
-
-        <!-- Kafka Client for Logback -->
-        <dependency>
-            <groupId>org.apache.kafka</groupId>
-            <artifactId>kafka-clients</artifactId>
-            <version>3.7.1</version>
-            <!-- Version usually managed by Spring Boot / Cloud Stream Kafka -->
-        </dependency>
-
-        <!-- Logstash Logback Encoder (version managed by parent) -->
-        <dependency>
-            <groupId>net.logstash.logback</groupId>
-            <artifactId>logstash-logback-encoder</artifactId>
-        </dependency>
-
-        <!-- Micrometer Tracing (Highly Recommended for correlating logs) -->
-        <dependency>
-            <groupId>io.micrometer</groupId>
-            <artifactId>micrometer-tracing-bridge-brave</artifactId> <!-- Or zipkin -->
-        </dependency>
-        <dependency> <!-- If sending traces via HTTP -->
-            <groupId>io.zipkin.reporter2</groupId>
-            <artifactId>zipkin-reporter-brave</artifactId>
-        </dependency>
-        <!-- Or if sending traces via Kafka -->
-        <!--
-        <dependency>
-            <groupId>org.springframework.kafka</groupId>
-            <artifactId>spring-kafka</artifactId>
-        </dependency>
-        -->
-
     </dependencies>
 
     <build>
