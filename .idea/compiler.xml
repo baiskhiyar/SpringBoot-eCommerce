@@ -10,7 +10,6 @@
         <module name="OrderingService" />
         <module name="PaymentsService" />
         <module name="ApiGateWayService" />
-        <module name="AuthService" />
         <module name="EurekaService" />
       </profile>
       <profile name="Annotation profile for My Microservices Project" enabled="true">
@@ -22,13 +21,14 @@
         </processorPath>
         <module name="ProductService" />
         <module name="userService" />
+        <module name="AuthService" />
       </profile>
     </annotationProcessing>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="ApiGateWayService" options="-parameters" />
-      <module name="AuthService" options="-parameters" />
+      <module name="AuthService" options="" />
       <module name="EurekaService" options="-parameters" />
       <module name="OrderingService" options="-parameters" />
       <module name="PaymentsService" options="-parameters" />

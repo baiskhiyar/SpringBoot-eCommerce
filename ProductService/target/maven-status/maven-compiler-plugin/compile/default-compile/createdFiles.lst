@@ -1,4 +1,7 @@
 ProductService/ProductServiceApplication.class
-ProductService/configs/RedisConfig.class
+ProductService/repository/ProductsRepository.class
 ProductService/controllers/ProductController.class
 ProductService/configs/RedisService.class
+ProductService/configs/RedisConfig.class
+ProductService/services/ProductService.class
+ProductService/models/Products.class

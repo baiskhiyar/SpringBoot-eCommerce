@@ -5,22 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="95ad09a4-92e8-4ce9-a5be-219753017918" name="Changes" comment="Added ProductService">
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ApiGateWayService/target/ApiGateWayService-0.0.1-SNAPSHOT.jar" beforeDir="false" afterPath="$PROJECT_DIR$/ApiGateWayService/target/ApiGateWayService-0.0.1-SNAPSHOT.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ApiGateWayService/target/ApiGateWayService-0.0.1-SNAPSHOT.jar.original" beforeDir="false" afterPath="$PROJECT_DIR$/ApiGateWayService/target/ApiGateWayService-0.0.1-SNAPSHOT.jar.original" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ApiGateWayService/target/classes/ApiGateWayService/dto/UsersDTO.class" beforeDir="false" afterPath="$PROJECT_DIR$/ApiGateWayService/target/classes/ApiGateWayService/dto/UsersDTO.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ApiGateWayService/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/ApiGateWayService/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ApiGateWayService/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/ApiGateWayService/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ApiGateWayService/target/surefire-reports/ApiGateWayService.ApiGateWaySeriviceApplicationTests.txt" beforeDir="false" afterPath="$PROJECT_DIR$/ApiGateWayService/target/surefire-reports/ApiGateWayService.ApiGateWaySeriviceApplicationTests.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ApiGateWayService/target/surefire-reports/TEST-ApiGateWayService.ApiGateWaySeriviceApplicationTests.xml" beforeDir="false" afterPath="$PROJECT_DIR$/ApiGateWayService/target/surefire-reports/TEST-ApiGateWayService.ApiGateWaySeriviceApplicationTests.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/AuthService/target/classes/AuthService/AuthServiceApplication.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AuthService/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/AuthService/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AuthService/target/classes/AuthService/controllers/AuthController.class" beforeDir="false" afterPath="$PROJECT_DIR$/AuthService/target/classes/AuthService/controllers/AuthController.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/AuthService/target/classes/AuthService/models/UsersDTO.class" beforeDir="false" afterPath="$PROJECT_DIR$/AuthService/target/classes/AuthService/models/UsersDTO.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/AuthService/target/classes/AuthService/services/AuthService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AuthService/target/classes/AuthService/services/UserService.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/AuthService/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/AuthService/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/AuthService/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/AuthService/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/logs/user-service.log" beforeDir="false" afterPath="$PROJECT_DIR$/logs/user-service.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -111,7 +101,7 @@
       </map>
     </option>
   </component>
-  <component name="RunManager" selected="Spring Boot.UserServiceApplication">
+  <component name="RunManager" selected="Spring Boot.AuthServiceApplication">
     <configuration default="true" type="JetRunConfigurationType">
       <module name="SpringBoot-eCommerce" />
       <method v="2">
